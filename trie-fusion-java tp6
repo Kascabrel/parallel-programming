@@ -1,0 +1,109 @@
+public void triFusion (Element [] tableau, int indiceDebut, int indiceFin) { // Création d'une méthode triFusion sans paramètres, qui utilise le tri fusion avec des paramètres tableau, indiceDebut et indiceFin 
+
+        if (indiceDebut < indiceFin && indiceDebut <= 0) { // Si l'indiceDebut est inférieur à l'indiceFin et que l'indiceDebut est invérieur à 0 du tableau d'élément
+
+            int indiceMilieu = (indiceDebut + indiceFin / 2); // Indice du milieu est une fusion de l'indice du début et de fin
+
+            triFusion (tableau, indiceDebut, indiceMilieu); // Indice du début et du milieu ne bouge pas dans le tri fusion 
+
+            triFusion (tableau, indiceMilieu + 1, indiceFin); // Indice du milieu augmente et l'indice de fin bouge pas dans le tri fusion 
+
+            fusion (tableau, indiceDebut, indiceMilieu, indiceFin); // Fusion de l'indice du début, milieu et de fin
+
+            operationElementaireTriFusion = operationElementaireTriFusion + 4; // Nombre d'opérations élémentaire du tri fusion
+        }
+    }
+
+    public void fusion (Element [] tableau, int indiceDebut, int indiceMilieu, int indiceFin) { // Création d'une méthode fusion, qui utilise la fusion avec des paramètres tableau, indiceDebut, indiceMilieu et indiceFin 
+
+        int indice1 = indiceMilieu - indiceDebut + 1; // Indice1 est l'indice du milieu moins celui du debut
+        int indice2 = indiceFin - indiceMilieu; // Indice2 est l'indice de la fin moins celui du milieu
+ 
+        Element Gauche [] = new Element [indice1]; // Création d'un nouvel indice1 à gauche
+        Element Droite [] = new Element [indice2]; // Création d'un nouvel indice2 à droite
+
+        operationElementaireTriFusion = operationElementaireTriFusion + 4; // Nombre d'opérations élémentaire du tri fusion
+ 
+        for (int i = 0; i < indice1; i++) { // Compte l'indice1
+
+            Gauche [i] = tableau [indiceDebut + i]; // L'élément gauche est l'indiceDebut augmente
+        
+            for (int j = 0; j < indice2; j++) { // Compte l'indice2
+
+                Droite [j] = tableau [indiceMilieu + 1 + j]; // L'élément droit est l'indiceMilieu augmente
+
+                operationElementaireTriFusion++; // Nombre d'opération élémentaire du tri fusion augmente
+            }
+        }
+        
+        int i = 0; // Initialise i
+        int j = 0; // Initialise j
+
+        int k = indiceDebut; // K est l'indice du début
+
+        while (i < indice1 && j < indice2) { // Tant que i est inférieur à l'indice1 et que j est inférieur à l'indice2
+            
+            if (Gauche [i].getCle () <= Droite [j].getCle ()) { // Si la clé de l'élément gauche est inférieur à celle de droite 
+
+                tableau [k] = Gauche [i]; // Tableau k est l'élément gauche
+                
+                i++; // I augmente
+            
+            } else { // Sinon on retourne
+                
+                tableau [k] = Droite [j]; // Tableau k est l'élément droit
+
+                j++; // J augmente
+
+                operationElementaireTriFusion = operationElementaireTriFusion + 3; // Nombre d'opérations élémentaire du tri fusion
+            }
+
+            k++; // K augmente
+        }
+ 
+        while (i < indice1) { // Tant que i est inférieur à l'indice1
+
+            tableau [k] = Gauche [i]; // Tableau k est l'élément gauche
+
+            i++; // I augmente
+            
+            k++; // K augmente
+
+            operationElementaireTriFusion = operationElementaireTriFusion + 2; // Nombre d'opérations élémentaire du tri fusion
+        }
+ 
+        while (j < indice2) { // Tant que j est inférieur à l'indice2
+
+            tableau [k] = Droite [j]; // Tableau k est l'élément droit
+
+            j++; // J augmente
+            
+            k++; // K augmente
+
+            operationElementaireTriFusion = operationElementaireTriFusion + 2; // Nombre d'opérations élémentaire du tri fusion
+        }
+    }
+
+    public void afficherTriFusion (){ // Création d'une méthode afficherTriFusion sans paramètres, qui affiche le tri fusion 
+        
+        if (this.taille > 0) { // Si la taille du tableau est supérieur à 0
+
+            System.out.println ("Tableau Fusion avant triFusion    : \n" + this); // Affiche les éléments du tableau avant le tri fusion
+
+            double debutTempsTriFusion = System.nanoTime (); // Début du temps pour le tri fusion donné en nanosecondes
+
+            this.triFusion (this.elements, 0, this.getTaille () - 1); // Tri fusion 
+
+            double finTempsTriFusion = System.nanoTime (); // Fin du temps pour le tri fusion donné en nanosecondes
+
+            System.out.println ("Tableau Fusion apres triFusion : \n" + this); // Affiche les éléments du tableau après le tri fusion
+
+            afficherDuree ("Tri Fusion", debutTempsTriFusion, finTempsTriFusion); // Affiche la durée du tri fusion
+
+            System.out.println ("Nombre d'operations elementaires tri fusion : " + operationElementaireTriFusion); // Affiche le nombre d'opérations élémentaires du tri fusion
+
+        } else { // Sinon on retourne, que le tableau par tri fusion est inférieur à 0 
+
+            System.out.println ("Tableau Fusion de taille <= 0"); // Affiche que le tableau par tri fusion est inférieur à 0 
+        }
+    }
