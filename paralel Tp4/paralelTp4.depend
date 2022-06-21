@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1655377840 source:/home/cabrel/Desktop/c-projet/paralel1/paralel Tp4/main.c
+	<stdio.h>
+	<stdlib.h>
+	<omp.h>
+
